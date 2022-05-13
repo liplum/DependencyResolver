@@ -31,5 +31,6 @@ kotlin.sourceSets.main {
 
 ksp {
     arg("PackageName", "net.liplum")
+    arg("FileName", "Contents ")
     arg("GenerateSpec", "Contents")
 }
