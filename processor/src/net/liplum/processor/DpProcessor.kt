@@ -41,7 +41,7 @@ class DpProcessor(
         class Visitor : KSVisitorVoid() {
             override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
                 if (function.parameters.isNotEmpty()) {
-                    logger.error("Only allow zero-argument Function in @DependOn", function)
+                    logger.info("Only allow zero-argument Function in @DependOn", function)
                     return
                 }
                 val annotation: KSAnnotation = function.annotations.first {
@@ -66,7 +66,7 @@ class DpProcessor(
                     }
                     counter++
                 } else {
-                    logger.error("${function.simpleName.asString()} doesn't have a full name", function)
+                    logger.info("${function.simpleName.asString()} doesn't have a full name", function)
                 }
             }
         }
@@ -82,7 +82,7 @@ class DpProcessor(
                 }
             }.distinct()
             if(counter!=functions.size){
-                logger.error("There is any entry missing. Excepted: $counter != Actual: ${functions.size} ")
+                logger.info("There is any entry missing. Excepted: $counter != Actual: ${functions.size} ")
             }
             for (qualifier in qualifiers) {
                 file += "// $qualifier\n"
@@ -92,7 +92,7 @@ class DpProcessor(
             }
             logger.info("Totally generated ${functions.size} ones.")
         } catch (e: Exception) {
-            logger.error("Can't resolve dependencies because ${e.javaClass} ${e.message}")
+            logger.info("Can't resolve dependencies because ${e.javaClass} ${e.message}")
             throw e
         }
         file += "}\n"
